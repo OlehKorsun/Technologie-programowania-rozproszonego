@@ -46,7 +46,15 @@ public class Client {
             ByteBuffer readBuffer = ByteBuffer.allocate(1024);
 
             readBuffer.clear();
+
             int readBytes = channel.read(readBuffer);
+
+            int totalWait = 0;
+            while ((readBytes = channel.read(readBuffer)) == 0 && totalWait < 2000) {
+                Thread.sleep(50);
+                totalWait += 50;
+            }
+
 
             readBuffer.flip();
             byte[] data = new byte[readBuffer.remaining()];
@@ -56,7 +64,10 @@ public class Client {
 
         } catch (IOException e) {
             throw new RuntimeException("Error during send: " + e.getMessage(), e);
+        } catch (InterruptedException e){
+            e.printStackTrace();
         }
+        return null;
     }
 
 
