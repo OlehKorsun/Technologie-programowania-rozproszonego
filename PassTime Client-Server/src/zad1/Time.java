@@ -159,7 +159,11 @@ public class Time {
         }
 
         stringBuilder.append("tygodni ");
-        stringBuilder.append(weeks);
+
+        if(weeks == (int)weeks)
+            stringBuilder.append((int)weeks);
+        else
+            stringBuilder.append(weeks);
 
         return stringBuilder.toString();
     }

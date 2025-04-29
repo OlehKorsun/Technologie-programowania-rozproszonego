@@ -18,11 +18,9 @@ public class ClientTask extends FutureTask<String> {
             public String call() throws Exception {
                 StringBuilder stringBuilder = new StringBuilder();
                 client.connect();
-//                stringBuilder.append(client.send("login " + client.getId()) + '\n');
                 String tmp = "";
                 client.send("login " + client.getId());
                 for(String str : requests){
-//                    stringBuilder.append(client.send(str) + '\n');
                     tmp = client.send(str);
                     if(showSendRes) System.out.println(tmp);
                 }

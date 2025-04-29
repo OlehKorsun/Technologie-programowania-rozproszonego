@@ -26,7 +26,6 @@ public class Server extends Thread{
 
     private List<String[]> weryfikacjaClientow;
 
-//    private volatile boolean isActive;
 
     public Server(String host, int port){
         this.host = host;
@@ -51,8 +50,6 @@ public class Server extends Thread{
 
 
 
-
-
     public void startServer(){
         this.start();
     }
@@ -74,9 +71,6 @@ public class Server extends Thread{
         }
         return stringBuilder.toString();
     }
-
-
-
 
 
     @Override
@@ -158,11 +152,6 @@ public class Server extends Thread{
 
 
 
-
-
-
-
-
     public void login(String message, SocketChannel sc){
         // dodać do listy logów "ID + logged in at "time""
         // otrzymuję host i port klienta
@@ -177,7 +166,6 @@ public class Server extends Thread{
             // dodaję do listy
             weryfikacjaClientow.add(new String[]{host, String.valueOf(port), id});
 
-//            String str = "=== " + id + " log start ===\n" +  "logged in";
             String str = "logged in\n";
 
             ByteBuffer buffer1 = ByteBuffer.wrap(str.getBytes());
@@ -218,8 +206,7 @@ public class Server extends Thread{
             }
 
             mapaLogow.get(id).add("logged out");
-            mapaLogow.get(id).add("=== " + id + " log end ===");
-            mapaLogow.get(id).add("cos tam");
+            mapaLogow.get(id).add("=== " + id + " log end ===\n");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -239,15 +226,13 @@ public class Server extends Thread{
         }
 
         mapaLogow.get(id).add("logged out\n");
-        mapaLogow.get(id).add("=== " + id + " log end ===");
+        mapaLogow.get(id).add("=== " + id + " log end ===\n");
 
         StringBuilder stringBuilder = new StringBuilder();
 
         for(String str : mapaLogow.get(id)){
             stringBuilder.append(str);
         }
-
-//        stringBuilder.append("=== " + id + " log end ===");
 
         ByteBuffer buffer1 = ByteBuffer.wrap(stringBuilder.toString().getBytes());
         try {
